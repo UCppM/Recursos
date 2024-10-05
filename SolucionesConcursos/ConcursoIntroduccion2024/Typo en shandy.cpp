@@ -2,7 +2,7 @@
 using namespace std;
 
 /*
-    En este problema solomente tenemos que ver
+    En este problema solamente tenemos que ver
     si tenemos menos cervezas o menos limonada
     y multiplicar por dos el minimo para obtener
     el shandy que podemos hacer
