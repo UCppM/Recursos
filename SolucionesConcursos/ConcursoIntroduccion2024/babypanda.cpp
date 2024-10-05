@@ -16,7 +16,7 @@ using namespace std;
           ser 10 = 0b1010 tras la noche
         - Al cuarto dia vemos que hay 10 slimes por tanto la solucion es 2
     Hemos dicho que el numero de noches no importa ya que podemos suponer que todas las noches
-    a las 4 ultimas el panda no estornudo slime.
+    anteriores a las 4 ultimas el panda no estornudo ningun slime.
 
     Con este ejemplo podemos ver que cada dia que suelta slime se representa por un bit = 1 que cada noche 
     rodamos a la izquierda, entonces solo tenemos que contar el numero de bits = 1 que tiene nuestro numero
@@ -25,11 +25,14 @@ using namespace std;
     NOTAS:
 
     El operador & lo podemos aplicar entre dos numeros y equivale a aplicar una operacion AND a cada bit 
-    de ambos numeros:
-
-    0b1100 & 0b1010 = 0b1000
-      12   &   10   =    8
-
+    de ambos numeros:     
+                                    | A | B | AND | OR | XOR |
+                                    |---|---|-----|----|-----|
+                                    | 0 | 0 |  0  |  0 |  0  |
+    0b1100 & 0b1010 = 0b1000        | 0 | 1 |  0  |  1 |  1  |
+      12   &   10   =    8          | 1 | 0 |  0  |  1 |  1  |
+                                    | 1 | 1 |  1  |  1 |  0  |
+                                    
     De manera existe el operador | que aplica un OR y el operador ^ que aplica un XOR
 
     El operador >> lo podemos aplicar entre dos numeros y equivale a rodar x bits del primer numero
