@@ -24,6 +24,13 @@ using namespace std;
 
     NOTAS:
 
+    Es importante usar long long (64 bits) para la entrada ya que puede ser hasta 10^18 lo que no cabe en un int (32bits)
+
+              | BITS | TAMANO CON SIGNO | TAMANO SIN SIGNO (unsigned) | TAMANO APROXIMADO
+    ----------|------|------------------|-----------------------------|-------------------
+    long long |  64  |     2^63 - 1     |           2^64 - 1          |    ~ 2 * 10^9
+          int |  32  |     2^31 - 1     |           2^32 - 1          |    ~ 9 * 10^18
+
     El operador & lo podemos aplicar entre dos numeros y equivale a aplicar una operacion AND a cada bit 
     de ambos numeros:     
                                             | A | B | AND | OR | XOR |
@@ -47,10 +54,6 @@ int main() {
     long long numeroDias, numeroSlime;
     int solucion = 0;
     cin >> numeroDias >> numeroSlime;
-
-    // El numero de dias no es importante para resolver el problema
-    // Importante que nuestras variables sean del tipo long long
-
 
     // Vamos a calcular el numeros de bits a uno en binario que
     // tiene numeroSlime
