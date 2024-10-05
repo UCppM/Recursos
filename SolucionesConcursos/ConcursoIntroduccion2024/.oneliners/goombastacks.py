@@ -1,0 +1,1 @@
+print(("" if (f := globals()["__builtins__"].__import__("functools")).reduce((lambda acc, g: (acc[0] + g[0], acc[1] and (acc[0] + g[0]) >= g[1])),(tuple(map(int,input().split())) for _ in range(int(input()))), (0,True))[1] else "im") + "possible")
