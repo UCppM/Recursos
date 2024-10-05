@@ -8,7 +8,7 @@ using namespace std;
     Vamos a suponer que es posible pasar y procesamos
     cada sala comparando que la suma acumulada de todos
     los goombas es mayor o igual a los goombas requeridos
-    en esa habitacion si esto no es posible paramos el 
+    en esa habitacion. Si esto no es posible paramos el 
     bucle e imprimimos la respuesta.
 
     OJO!!!: En este caso podemos parar el bucle y no leer toda la entrada
