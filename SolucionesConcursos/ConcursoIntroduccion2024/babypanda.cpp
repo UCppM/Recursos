@@ -26,14 +26,12 @@ using namespace std;
 
     El operador & lo podemos aplicar entre dos numeros y equivale a aplicar una operacion AND a cada bit 
     de ambos numeros:     
-                                    | A | B | AND | OR | XOR |
-                                    |---|---|-----|----|-----|
-                                    | 0 | 0 |  0  |  0 |  0  |
-    0b1100 & 0b1010 = 0b1000        | 0 | 1 |  0  |  1 |  1  |
-      12   &   10   =    8          | 1 | 0 |  0  |  1 |  1  |
-                                    | 1 | 1 |  1  |  1 |  0  |
-                                    
-    De manera existe el operador | que aplica un OR y el operador ^ que aplica un XOR
+                                            | A | B | AND | OR | XOR |
+    0b1100 & 0b1010 = 0b1000                |---|---|-----|----|-----|
+      12   &   10   =    8                  | 0 | 0 |  0  |  0 |  0  |
+                                            | 0 | 1 |  0  |  1 |  1  |
+    Existe el operador | que aplica un OR   | 1 | 0 |  0  |  1 |  1  |
+    y el operador ^ que aplica un XOR       | 1 | 1 |  1  |  1 |  0  |
 
     El operador >> lo podemos aplicar entre dos numeros y equivale a rodar x bits del primer numero
     a la derecha
