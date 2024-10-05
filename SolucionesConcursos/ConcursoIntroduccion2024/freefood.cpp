@@ -15,7 +15,9 @@ using namespace std;
 
     Para usar un vector es necesario importarlos poniendo '#include <vector>'
     tambien podemos usar '#include <bits/stdc++.h>' que nos incluye los vectores
-    y mas cosas que todavia no hemos usado.
+    y mas cosas que todavia no hemos usado. Esto último solo funciona en Linux, así
+    que si usas Windows es posible que te de error al compilar aunque funcione en el
+    juez.
 
     Si no quieres tener que escribir std::vector escribe tambien 'using namespace std;'
 
