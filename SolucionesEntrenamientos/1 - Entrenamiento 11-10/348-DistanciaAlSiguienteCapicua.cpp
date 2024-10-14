@@ -5,11 +5,12 @@ using namespace std;
     En este problema vamos tenemos que calcular el capicua mas proximo
     para ello podemos fijarnos que el podemos ir calculando la distancia desde
     los bordes del numero hasta las cifras del centro de la siguiente manera
-                   1   5          2 5
-                   |   |          | |
-    12345       -> 12351     ->  12421 -> Es capicua
-    Diferencias -> 5 + 6 = 1 ->  mod(10) 5 + 7 = 2 mod(10)
-    Distancia   -> 6 * 1 = 6 -> 7 * 10 = 70
+    
+                   1   5                  2 5
+                   |   |                  | |
+    12345       -> 12351             ->  12421 -> Es capicua
+    Diferencias -> 5 + 6 = 1 mod(10) -> 5 + 7 = 2 mod(10)
+    Distancia   -> 6 * 1 = 6         -> 7 * 10 = 70
     Total 70 + 6 = 76
 
     Existen varias maneras de hacer este problema si te ocurre otra mejor no dudes en comentarla
