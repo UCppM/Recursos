@@ -66,7 +66,11 @@
     y C++ no es la excepción.
     
     Para acceder a los elementos indicaremos el nombre del vector y el indice entre paréntesis,
-    por ejemplo, \texttt{miVector[0]}.
+    por ejemplo, \texttt{miVector[0]}. De esta manera podemos leer, modificar y operar con los elementos
+    del vector como si se tratasen de variables comunes y corrientes. 
+
+    Por medio del método \texttt{front} podemos acceder al primer elemento del vector de la siguiente manera 
+    \texttt{miVector.front()} y con \texttt{back} al último de elemento de la misma manera \texttt{miVector.back()}.
 
     \textbf{IMPORTANTE:} Solo podemos usar indices que se encuentren en el rango $[0, \text{tamaño vector})$.
     Si tratamos de acceder elementos fuera del tamaño del vector lo más posible es que el programa explote.
@@ -165,6 +169,42 @@
     Ya hemos visto algunas operaciones básicas de los vectores, cómo crearlos y cómo acceder a sus elementos. Ahora veremos
     otras operaciones igual de importantes.
 
+    \subsection{Obtener el tamaño de un vector}
+
+    Para obtener el tamaño de un vector usamos el \texttt{size} que nos un numero entero sin signo. 
+    También existe el método \texttt{empty} que devuelve \texttt{true} si y solo si el vector está 
+    vacio, es decir, no tiene elementos.
+
+    \begin{codelisting}{Tamaño de un vector}
+    vector<int> v {3, 4, -1, 2};
+
+    cout << v.size() << endl; // 4
+    cout << v.empty() << endl; // false
+
+    \end{codelisting}
+
+
+    \textbf{IMPORTANTE:} \texttt{size} devuelve un número entero sin signo asi que hay que tener cuidado con las
+    restas. Por ejemplo:
+
+    \begin{codelisting}{Cuidado con los unsigned en \texttt{size()}}
+vector<int> v;
+
+// Este bucle falla 0 - 1 unsigned = 2^63 - 1
+for(int i = 0; i < v.size() - 1; i++) {
+    cout << i << " ";
+}
+cout << v[v.size() - 1] << endl;
+
+// Este bucle no falla 0 - 1 signed = -1
+for(int i = 0; i < (int) v.size() - 1; i++) {
+    cout << i << " ";
+}
+cout << v[v.size() - 1] << endl;
+
+\end{codelisting}
+
+
     \subsection{Leer vectores de la entrada estándar}
 
     Hemos visto que podemos inicializar el vector con valores por defecto o por medio de una lista. Sin embargo queremos
@@ -209,10 +249,64 @@ for(int i = 0; i < numeroElementos; i++) {
 
     Existen dos opciones para insertar nuevos elementos dentro del vector. La primera opción es usar \texttt{push\_back},
     este método es muy rápido (tiene un coste amortizado de $\mathcal{O}(1)$). Se usa así \texttt{miVector.push\_back(elemento)} . Lo que hace es añadir el elemento al final 
-    del vector. El segundo método, es el método \texttt{insert} que nos permite seleccionar en que posición colocar el
+    del vector. 
+    
+    El segundo método, es el método \texttt{insert} que nos permite seleccionar en que posición colocar el
     nuevo elemento, antes de ser colocado todos los elementos a la derecha se ruedan a una posición para poder hacer hueco
     al nuevo elemento. Este método es mucho más lento sobretodo cuando la posición sea cercana a 0 (tiene un coste de $\mathcal{O}(n)$). 
-    Se usa así \texttt{miVector.insert(elemento, posición)}.
+    Además hace uso de operadores, los cuales no hemos comentado. Se usa así \texttt{miVector.insert(iteradorEnLaPosicion, elemento)}. 
+    Para determinar la posición del iterador vamos a usar \texttt{miVector.begin()}, que nos da un iterador al comienzo del vector, 
+    y le sumamos la posición donde queremos insertar el elemento de la siguiente manera \texttt{miVector.insert(miVector.begin() + posición, elemento)}.
+    
+    Si no entiendes las operaciones con los iteradores no importa mucho ya que estas operaciones son muy poco frecuentes, sobretodo en vectores.
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\mylist{3, 4, 2, -1, 4, 1, 2, 3}
+            \def\size{0.8}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (B) [left = 0em of A]  {\texttt{v=}};
+
+            \def\mylist{3, 4, 2, -1, 4, 1, 2, 3, 6}
+            \draw pic [below = 2 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
+            \draw node (D) [right = -0.8cm of C, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (B) [left = 0em of C]  {\texttt{v.push\_back(6)}};
+            \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
+
+            \def\mylist{3, 5, 4, 2, -1, 4, 1, 2, 3, 6}
+            \draw pic [below = 2 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
+            \draw node (F) [left = -1.6cm of E, minimum size = \size cm, fill=green, opacity=0.25] {5};
+            \draw node (G) [left = 0em of E]  {\texttt{v.insert(v.begin() + 1, 5)}};
+            \draw[thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
+        \end{tikzpicture}
+        \caption{Ejemplo de inserción de elementos con \texttt{push\_back} e \texttt{insert}}
+    \end{figure}
+
+    \begin{codelisting}{Inserción de elementos}\texttt{erase}
+int n = 4;        
+vector<int> v(n);
+for(int i = 0; i < n; i++) {
+    v[i] = i;
+}
+// v = {0, 1, 2, 3};
+
+v.push_back(6); // v = {0, 1, 2, 3, 6};
+
+auto it = v.begin() + 1;
+v.insert(it, -1); // v = {0, -1, 1, 2, 3, 6};
+        \end{codelisting}
+
+
+    \subsection{Eliminar elementos}
+
+    La eliminación de elementos aunque no es tan común en los problemas se puede hacer a través de dos métodos nuevamente
+    \texttt{pop\_back} y \texttt{erase}. El método \texttt{pop\_back} permite la eliminación del último elemento del
+    vector, es el opuesto del método \texttt{push\_back}. Este método es bastante rápido (tiene un coste amortizado de 
+    $\mathcal{O}(1)$). Se usa así \texttt{miVector.pop\_back()}. El método \texttt{erase} es un método es más complejo 
+    ya que hace uso de iteradores, que no vamos a explicar. Se usa así \texttt{miVector.erase(iteradorEnLaPosicion)},
+    como no sabemos lo que son iteradores lo usaremos de la siguiente manera \texttt{miVector.erase(miVector.begin() + posicionEliminar)}.
+    Al igual que \texttt{insert} es más lento conforme la posición sea más cercana a 0, (tiene un coste de 
+    $\mathcal{O}(n)$).
 
     \begin{figure}[h]
         \centering
@@ -224,32 +318,122 @@ for(int i = 0; i < numeroElementos; i++) {
 
             \def\mylist{3, 4, 2, -1, 4, 1, 2, 3, 6}
             \draw pic [below = 2 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
-            \draw node (D) [right = -0.8cm of C, minimum size = \size cm, fill=red, opacity=0.25] {6};
-            \draw node (B) [left = 0em of C]  {\texttt{v.push\_back(6)}};
+            \draw node (D) [right = -0.8cm of C, minimum size = \size cm, opacity=0.25] {6};
+            \draw node (B) [left = 0em of C]  {\texttt{v.pop\_back(6)}};
+            \draw [thick, red] (D.north west) -- (D.south east) (D.south west) -- (D.north east);
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
-            \def\mylist{3, 5, 4, 2, -1, 4, 1, 2, 3, 6}
+            \def\mylist{3, 4, 2, -1, 4, 1, 2, 3}
             \draw pic [below = 2 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
-            \draw node (F) [left = -1.6cm of E, minimum size = \size cm, fill=red, opacity=0.25] {5};
-            \draw node (G) [left = 0em of E]  {\texttt{v.insert(5, 1)}};
+            \draw node (G) [left = 0em of E]  {\texttt{v.erase(v.begin() + 1)}};
+            \draw [thick, red] (F.north west) -- (F.south east) (F.south west) -- (F.north east);
             \draw[thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
+
         \end{tikzpicture}
-        \caption{Ejemplo de inserción de elementos con \texttt{push\_back} e \texttt{insert}}
+        \caption{Ejemplo de inserción de elementos con \texttt{pop\_back} e \texttt{erase}}
     \end{figure}
 
-    \begin{codelisting}{Inserción de elementos}
-int n = 4;        
+    \begin{codelisting}{Eliminación de elementos}
+int n = 6;        
 vector<int> v(n);
-for(int i = 0; i < numeroElementos; i++) {
+for(int i = 0; i < 2 * n; i += 2) {
     v[i] = i;
 }
-// v = {0, 1, 2, 3};
+// v = {0, 2, 4, 6, 8, 10};
 
-v.push_back(6); // v = {0, 1, 2, 3, 6};
+v.pop_back(); // v = {0, 2, 4, 6, 8};
 
-v.insert(-1, 1); // v = {0, -1, 1, 2, 3, 6};
-        \end{codelisting}
+v.erase(v.begin() + 2); // v = {0, 2, 6, 8};
+    \end{codelisting}
 
+    \subsection{Vectores multidimensionales}
+
+    Como dijimos antes los vectores pueden contener casi cualquier tipo de elemento. Entre este
+    los tipos que pueden se encuentran ¡otros vectores! Podemos crear vectores que contengan vectores
+    y así sucesivamente. Lo general en los problemas es que como mucho necesitemos insertar
+    un vector de vectores de enteros por ejemplo, el tipo de este vector sería \texttt{vector<vector<int>>} 
+    por ejemplo. Esto es común cuando estamos representado matrices o grafos (lo veremos a lo largo del grupo). 
+    
+    Como son vectores podemos hacer con ellos todas las operaciones que hemos mencionado antes ya sea en el vector
+    externo como en cada uno de los vectores internos.
+
+    Si queremos acceder a los elementos de los vectores internos usaremos dos veces el operador []. Con \texttt{miVector[y]}
+    obtendremos el un vector de tipo \texttt{vector<tipoElemento>} y con un segundo [] de la siguiente manera 
+    \texttt{miVector[y][x]} el elemento de tipo \texttt{tipoElemento} que se situa en la posición \texttt{x} del vector
+    \texttt{y}.
+
+    Cuando usamos vectores bidimensionales es preferible iterar sobre ellos primero recorriendo el vector interno antes
+    de pasar a recorrer el siguiente vector. Si pensamos en una matriz (no es necesario que todas las filas tengan la misma longitud) a la que accedemos de la siguiente manera 
+    \texttt{matriz[fila][columna]} es preferible recorrer todas las columnas antes de recorrer la siguiente fila
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\size{0.8}
+
+            \def\mylist{0, 1, 2, 3, 4}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (AA) [left = 0em of A]  {\texttt{matrix[0]=}};
+
+            \def\mylist{5, 6, 7, 8, 9}
+            \draw pic [below = of A.west, anchor = east, local bounding box=B] {array={\mylist}{\size}};
+            \draw node (BB) [left = 0em of B]  {\texttt{matrix[1]=}};
+
+            \def\mylist{10, 11, 12, 13, 14}
+            \draw pic [below = of B.west, anchor = east, local bounding box=C] {array={\mylist}{\size}};
+            \draw node (CC) [left = 0em of C]  {\texttt{matrix[2]=}};
+
+            \def\mylist{15, 16, 17, 18, 19}
+            \draw pic [below = of C.west, anchor = east, local bounding box=D] {array={\mylist}{\size}};
+            \draw node (DD) [left = 0em of D]  {\texttt{matrix[3]=}};
+
+            \draw node (EE) [below = 0.5 of D]  {\texttt{matrix}};
+
+            \draw [thick, red, opacity=0.5, ->] (0.8,0) -++ (0:3.2cm) -- (0.8,-1) -++ (0:3.2cm) -- (0.8,-2) -++ (0:3.2cm) -- (0.8,-3) -++ (0:3.2cm);
+
+        \end{tikzpicture}
+        \caption{Recorrido primero por columnas y luego por filas en un \texttt{vector<vector<int>>}}
+    \end{figure}
+
+    \begin{codelisting}{Vectores multidimensionales}
+// Creamos un vector de vectores vacios
+vector<vector<int>> matriz;
+int n = 4;
+for(int fila = 0; fila < n; fila++) {
+    matriz.push_back(vector<int>());
+    for(int columna = 0; columna < n; columna++) {
+        matriz[fila].push_back(columna + fila * n);
+    }
+}
+
+// Segunda forma de crear una matriz
+// Ya hemos declarado la variable antes
+// si no seria vector<vector<int>> matriz(n, vector<int>(n));
+matriz = vector<vector<int>>(n, vector<int>(n)); 
+for(int fila = 0; fila < n; fila++) {
+    matriz.push_back(vector<int>());
+    for(int columna = 0; columna < n; columna++) {
+        matriz[fila][columna] = columna + fila * n;
+    }
+}
+
+// Imprimos por pantalla matriz
+for(int fila = 0; fila < 4; fila++) {
+    matriz.push_back(vector<int>());
+    for(int columna = 0; columna < 4; columna++) {
+        cout << matriz[fila][columna] << " ";
+    }
+    cout << endl;
+}
+
+/*
+    0 1 2 3 
+    4 5 6 7 
+    8 9 10 11 
+    12 13 14 15
+*/
+    \end{codelisting}
+ 
 \end{document}
 
     
