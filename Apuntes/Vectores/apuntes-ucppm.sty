@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{apuntes-ucppm}
+
+\RequirePackage{graphicx}
+\RequirePackage{titling}
+\RequirePackage{fancyhdr}
+\RequirePackage[skip=12pt plus=1pt, indent=15pt]{parskip}
+\RequirePackage{listings}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage[svgnames]{xcolor}
+
+% Estilo
+\renewcommand{\figurename}{\textbf{Figura}}
+\renewcommand{\thefigure}{\textbf{\arabic{figure}}}
+
+\newcommand{\logo}[1]{\def\thislogo{#1}}
+
+\renewcommand{\maketitle}{%
+    \begin{titlepage}
+        \begin{center}
+            \vspace*{2cm}
+            \Huge
+            \textbf{\thetitle}
+        
+            \vspace{0.5cm}
+            
+            \huge
+            Apuntes para programación competitiva
+            \vfill
+        
+            \includegraphics[width=0.6\textwidth]{\thislogo}
+            
+            \vfill
+        
+            \Large
+            \textbf{Autor:} \theauthor
+        
+                    
+        \end{center}
+    \end{titlepage}
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+
+\lstdefinestyle{mystyle}{
+    commentstyle=\color{codegray},
+    keywordstyle=\color{magenta},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,   
+    numbers=none,        
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\newtcblisting[auto counter]{codelisting}[2][]{sharp corners, 
+    fonttitle=\bfseries, colframe=SeaGreen, listing only,
+    listing options={basicstyle=\ttfamily\footnotesize,language=C++}, 
+    title=Código \thetcbcounter: #2, #1}
+
