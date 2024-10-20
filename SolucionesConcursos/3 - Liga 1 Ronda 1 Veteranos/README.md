@@ -1,4 +1,4 @@
-# Soluciones del concurso de Introducción de UCppM 2024
+# Soluciones del concurso de la 1ª Jornada de la liga de veteranos de 2024
 Aqui podrás encontrar las soluciones de los problemas de la primera jornada de la liga de veteranos de UCppM que se organizó el 18/10/2024
 ## Problemas
 
