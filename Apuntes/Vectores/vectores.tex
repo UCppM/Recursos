@@ -319,7 +319,7 @@ v.insert(it, -1); // v = {0, -1, 1, 2, 3, 6};
             \def\mylist{3, 4, 2, -1, 4, 1, 2, 3, 6}
             \draw pic [below = 2 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
             \draw node (D) [right = -0.8cm of C, minimum size = \size cm, opacity=0.25] {6};
-            \draw node (B) [left = 0em of C]  {\texttt{v.pop\_back(6)}};
+            \draw node (B) [left = 0em of C]  {\texttt{v.pop\_back()}};
             \draw [thick, red] (D.north west) -- (D.south east) (D.south west) -- (D.north east);
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
@@ -395,7 +395,7 @@ v.erase(v.begin() + 2); // v = {0, 2, 6, 8};
         \caption{Recorrido primero por columnas y luego por filas en un \texttt{vector<vector<int>>}}
     \end{figure}
 
-    \begin{codelisting}{Vectores multidimensionales}
+    \begin{codelisting}{Ejemplo de Vectore multidimensionales}
 // Creamos un vector de vectores vacios
 vector<vector<int>> matriz;
 int n = 4;
@@ -417,7 +417,7 @@ for(int fila = 0; fila < n; fila++) {
     }
 }
 
-// Imprimos por pantalla matriz
+// Imprimos por pantalla la matriz
 for(int fila = 0; fila < 4; fila++) {
     matriz.push_back(vector<int>());
     for(int columna = 0; columna < 4; columna++) {
