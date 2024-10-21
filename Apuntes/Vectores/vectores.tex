@@ -164,7 +164,7 @@
     insertamos elementos en un vector es 'rápido', esto supone un coste extra y hará que nuestro programa corra más rápido. 
     Por lo tanto el 75\% de las veces  va a ser mejor inicializar un vector con un tamaño n, antes que ir insertando elementos poco a poco. }
     \pagebreak
-    \section{Operaciones básicas}
+    \section{Operaciones}
 
     Ya hemos visto algunas operaciones básicas de los vectores, cómo crearlos y cómo acceder a sus elementos. Ahora veremos
     otras operaciones igual de importantes.
@@ -303,9 +303,9 @@ v.insert(it, -1); // v = {0, -1, 1, 2, 3, 6};
     \texttt{pop\_back} y \texttt{erase}. El método \texttt{pop\_back} permite la eliminación del último elemento del
     vector, es el opuesto del método \texttt{push\_back}. Este método es bastante rápido (tiene un coste amortizado de 
     $\mathcal{O}(1)$). Se usa así \texttt{miVector.pop\_back()}. El método \texttt{erase} es un método es más complejo 
-    ya que hace uso de iteradores, que no vamos a explicar. Se usa así \texttt{miVector.erase(iteradorEnLaPosicion)},
-    como no sabemos lo que son iteradores lo usaremos de la siguiente manera \texttt{miVector.erase(miVector.begin() + posicionEliminar)}.
-    Al igual que \texttt{insert} es más lento conforme la posición sea más cercana a 0, (tiene un coste de 
+    ya que hace uso de iteradores de la misma manera que lo hacía \texttt{insert}. Se usa así \texttt{miVector.erase(iteradorEnLaPosicion)},
+    si tenemos la posición a eliminar podemos hacer lo siguiente \texttt{miVector.erase(miVector.begin() + posicionEliminar)}.
+    Al igual que \texttt{insert} es más lento conforme la posición a borrar sea más cercana a 0, (tiene un coste de 
     $\mathcal{O}(n)$).
 
     \begin{figure}[h]
@@ -395,7 +395,7 @@ v.erase(v.begin() + 2); // v = {0, 2, 6, 8};
         \caption{Recorrido primero por columnas y luego por filas en un \texttt{vector<vector<int>>}}
     \end{figure}
 
-    \begin{codelisting}{Ejemplo de Vectore multidimensionales}
+    \begin{codelisting}{Ejemplo de Vectores multidimensionales}
 // Creamos un vector de vectores vacios
 vector<vector<int>> matriz;
 int n = 4;
@@ -412,7 +412,7 @@ for(int fila = 0; fila < n; fila++) {
 matriz = vector<vector<int>>(n, vector<int>(n)); 
 for(int fila = 0; fila < n; fila++) {
     matriz.push_back(vector<int>());
-    for(int columna = 0; columna < n; columna++) {
+    for(int columna = 0; columna < n; columna++) {matrix[1]=
         matriz[fila][columna] = columna + fila * n;
     }
 }
@@ -433,7 +433,239 @@ for(int fila = 0; fila < 4; fila++) {
     12 13 14 15
 */
     \end{codelisting}
- 
+
+    \subsection{Ordenación de vectores}
+    En muchos problemas es necesario ordenar el vector previamente como parte del algoritmo para resolverlo. 
+    En FP se ven algoritmos de ordenación, sin embargo, son muy lentos (tienen complejidad $\mathcal{O}(n^2)$),
+    la manera más rápida y relativamente eficiente (tiene coste $\mathcal{O}(n\log(n))$) de ordenar un vector en un concurso es por medio de la función
+    \texttt{sort}. Le deberemos pasar el rango en el que queremos que ordene el vector por medio de iteradores de la 
+    siguiente manera \texttt{sort(miVector.begin(), miVector.end())} y nos ordenará el vector de menor a mayor. Es importantes
+    importar \texttt{algorithm} de la siguiente manera \texttt{\#include <algorithm>} para usar \texttt{sort}.
+
+\begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\size{0.8}
+
+            \def\mylist{5, 2, 1, 6, 4, 3, 0}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (AA) [left = 0em of A]  {\texttt{v=}};
+
+            \def\mylist{0, 1, 2, 3, 4, 5, 6}
+            \draw pic [below = 2 of A.west, anchor = east, local bounding box=B] {array={\mylist}{\size}};
+            \draw node (BB) [left = 0em of B]  {\texttt{sort(v.begin(), v.end())}};
+
+            \draw [thick, red, ->] (0.8,-0.4) -- (4.8, -1.6);
+            \draw [thick, red, ->] (1.6,-0.4) -- (2.4, -1.6);
+            \draw [thick, red, ->] (2.4,-0.4) -- (1.6, -1.6);
+            \draw [thick, red, ->] (3.2,-0.4) -- (5.6, -1.6);
+            \draw [thick, red, ->] (4.0,-0.4) -- (4.0, -1.6);
+            \draw [thick, red, ->] (4.8,-0.4) -- (3.2, -1.6);
+            \draw [thick, red, ->] (5.6,-0.4) -- (0.8, -1.6);
+
+
+        \end{tikzpicture}
+        \caption{Ordenación de un vector de enteros por medio de \texttt{sort}}
+    \end{figure}
+
+    Muchas veces nos interesa ordenar el vector de otra manera, por ejemplo de mayor a menor, para ello
+    existe la función $\texttt{greater<tipoElemento>()}$ que usaremos de la siguiente manera 
+    $\texttt{sort(miVector.begin(), miVector.end(), greater<tipoElemento>())}$. También podemos pasarle A
+    sort nuestras propias funciones para ordenar siguiendo otros criterios
+    siempre que sean de la forma $\texttt{bool miFuncion(tipoElemento a, tipoElemento b)}$. Donde $\texttt{miFuncion}$
+    devuelve $ \texttt{true}$ si queremos que el elemento \texttt{a} se encuentre antes que \texttt{b}. Pasar
+    una función de ordenación propia es especialmente útil cuando el vector no sea de enteros si no de pares o de
+    algun tipo de dato que hemos creado nosotros, por ejemplo un intervalo, una esfera o lo que nos encontremos en los problemas.
+
+    \begin{codelisting}{Ejemplo de ordenación}
+// Los pares van primeros y luego ordenamos de mayor a menor
+bool cmp(int a, int b) {
+    return a % 2 == 0 && b % 2 == 1 || a > b;
+}
+
+int main() {
+    vector<int> v {5, 2, 1, 6, 4, 3, 0};
+    int n = 4;
+
+    sort(v.begin(), v.end(), greater<int>());
+
+    // 6 5 4 3 2 1 0
+    for(int i = 0; i < v.size(); i++) cout << v[i] << " ";
+    cout << endl;
+
+    sort(v.begin(), v.end(), cmp);
+
+    // 6 4 2 0 5 3 1
+    for(int i = 0; i < v.size(); i++) cout << v[i] << " ";
+    cout << endl;
+}
+    \end{codelisting}
+    
+    \subsection{Operaciones en vectores ordenados}
+    En comun en muchos problemas el preguntar el menor o mayor elemento que cumple cierta condición para ayudarnos
+    a resolver esos problemas en algunos casos podemos hacer uso de las funciones \texttt{lower\_bound} y 
+    \texttt{upper\_bound}. Estas funciones operan sobre vectores ordenados y son muy rápidas (complejidad $\mathcal{O}(\log n)$). Necesitan
+    de la librería \texttt{algorithm}.
+
+    \texttt{lower\_bound} busca en la lista el \textbf{menor elemento que es mayor o igual a un elemento dado} y devuelve un iterador apuntando
+    a la posición del elemento encontrado. Si ningún elemento cumple esa condición devuelve \texttt{miVector.end()}. Tambien podemos pasarle
+    una función de comparación propia como en el caso del \texttt{sort}.
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\mylist{1, 3, 5, 5, 7, 9}
+            \def\size{0.8}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
+
+            \draw node (B) [left = 0em of A]  {\texttt{lower\_bound(v.begin(), v.end(), 6)}};
+
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw pic [below = 1.75 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
+            \draw node (D) [left = -2.4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DDD) [right = 0 of DD, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DDDD) [right = 0 of DDD, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (B) [left = 0em of C]  {\texttt{lower\_bound(v.begin(), v.end(), 5)}};
+            \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
+
+            \draw pic [below = 1.75 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
+            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {5};
+            \draw node (G) [left = 0em of E]  {\texttt{lower\_bound(v.begin(), v.end(), 14)}};
+            \draw[red, thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
+        \end{tikzpicture}
+        \caption{Ejemplo de \texttt{lower\_bound}}
+    \end{figure}
+
+    \texttt{upper\_bound} busca en la lista el \textbf{menor elemento que es mayor a un elemento dado} y devuelve un iterador apuntando
+    a la posición del elemento encontrado. Si ningún elemento cumple esa condición devuelve \texttt{miVector.end()}. Tambien podemos pasarle
+    una función de comparación propia como en el caso del \texttt{sort}.
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\mylist{1, 3, 5, 5, 7, 9}
+            \def\size{0.8}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
+
+            \draw node (B) [left = 0em of A]  {\texttt{upper\_bound(v.begin(), v.end(), 6)}};
+
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw pic [below = 1.75 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
+            \draw node (D) [left = -4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (B) [left = 0em of C]  {\texttt{upper\_bound(v.begin(), v.end(), 5)}};
+            \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
+
+            \draw pic [below = 1.75 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
+            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {5};
+            \draw node (G) [left = 0em of E]  {\texttt{upper\_bound(v.begin(), v.end(), 14)}};
+            \draw[red, thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
+        \end{tikzpicture}
+        \caption{Ejemplo de \texttt{upper\_bound}}
+    \end{figure}
+    \begin{codelisting}{Ejemplo de \texttt{lower\_bound} y \texttt{upper\_bound} }
+vector<int> v {10, 10, 10, 20, 20, 20, 30, 30, 30};
+
+auto lower = lower_bound (v.begin(), v.end(), 20);
+auto upper = upper_bound (v.begin(), v.end(), 20);
+int indiceLower = lower - v.begin();
+int indiceUpper = upper - v.begin();
+
+int elementoLower, elementoUpper;
+if(lower != v.end())elementoLower = *lower;
+else elementoLower = -1;    
+if(upper != v.end())elementoUpper = *upper;
+else elementoUpper = -1;    
+cout << "lower: indice = " << indiceLower << ", elem = " << elementoLower << endl; 
+cout << "upper: indice = " << indiceUpper << ", elem = " << elementoUpper << endl; 
+/*10, 10, 10, 20, 20, 20, 30, 30, 30
+               |           |
+             lower       upper
+    lower_bound: indice = 3, elemento = 20
+    upper_bound: indice = 6, elemento = 30    */
+
+lower = lower_bound (v.begin(), v.end(), 30);
+upper = upper_bound (v.begin(), v.end(), 30);
+indiceLower = lower - v.begin();
+indiceUpper = upper - v.begin();
+
+if(lower != v.end()) elementoLower = *lower;
+else elementoLower = -1;    
+if(upper != v.end()) elementoUpper = *upper;
+else elementoUpper = -1;    
+cout << "lower: indice = " << indiceLower << ", elem = " << elementoLower << endl; 
+cout << "upper: indice = " << indiceUpper << ", elem = " << elementoUpper << endl; 
+/*  10, 10, 10, 20, 20, 20, 30, 30, 30
+                            |          |
+                            lower      upper
+    lower_bound: indice = 6, elemento = 30
+    upper_bound: indice = 9, elemento = -1    */      
+    \end{codelisting}
+    \subsection{Invertir un vector}
+    Este operación se encuentra dentro de la librería \texttt{algorithm} y nos permite invertir el orden de un vector
+    de la siguiente manera \texttt{reverse(miVector.begin(), miVector.end())}.
+
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}
+            \def\mylist{3, 4, 2, -1, 4, 1, 2, 3}
+            \def\size{0.8}
+            \draw pic [local bounding box=A] {array={\mylist}{\size}};
+            \draw node (B) [left = 0em of A]  {\texttt{v=}};
+
+            \def\mylist{3, 2, 1, 4, -1, 2, 4, 3}
+            \def\size{0.8}
+            \draw pic [below = of A.west, anchor = east, local bounding box=C] {array={\mylist}{\size}};
+            \draw node (B) [left = 0em of C]  {\texttt{reverse(v.begin(), v.end())}};
+        \end{tikzpicture}
+        \caption{Ejemplo de operación \texttt{reverse}}
+    \end{figure}
+
+    \subsection{Iterar sobre un vector}
+    Conocemos la manera típica de iterar sobre un vector por medio del bucle \texttt{for}.
+    \begin{codelisting}{Iteración con \texttt{for} con indices}
+vector<int> v {3, 4, 2, -1, 4, 1, 2, 3};
+for(int i = 0; i < v.size(); i++) {
+    cout << v[i] << " ";
+} 
+cout << endl; // 3 4 2 -1 4 1 2 3
+    \end{codelisting}
+
+    Sin embargo, existe una sintaxis que nos permite hacerlo escribiendo menos y es la siguiente
+    \texttt{for(tipoElemento elemento : miVector) \{\}}. De esta manera obtenemos directamente el elemento
+    en vez del indice del elemento.
+    
+    Esta notación nos permitirá iterar sobre otras estructuras donde
+    no tenemos acceso directo a los elementos por medio de indices. 
+
+    \begin{codelisting}{Iteración con \texttt{for} con iteradores}
+vector<int> v {3, 4, 2, -1, 4, 1, 2, 3};
+for(int i : v) {
+    cout << i << " ";
+} 
+cout << endl; // 3 4 2 -1 4 1 2 3
+    \end{codelisting}
+
+    Finalmente en muchos problemas será necesario imprimir un vector como solución. El problema es que
+    muchos jueces son muy rigurosos con la salida y no es posible insertar espacios al final de la salida
+    como hemos hecho antes ya que nos dará Wrong Answer o Presentation Error. Por ello la forma más recomendable
+    de imprimir un vector para dar una solución es:
+
+    \begin{codelisting}{Imprimir un vector como solución en un juez}
+// Suponemos que el vector no es vacio
+vector<int> v {3, 4, 2, -1, 4, 1, 2, 3};
+for(int i = 0; i < v.size() - 1; i++) {
+    cout << v[i] << " ";
+} 
+cout << v.back() << endl;
+            \end{codelisting}
 \end{document}
+
+
 
     
