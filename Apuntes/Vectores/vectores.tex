@@ -282,7 +282,7 @@ for(int i = 0; i < numeroElementos; i++) {
         \caption{Ejemplo de inserción de elementos con \texttt{push\_back} e \texttt{insert}}
     \end{figure}
 
-    \begin{codelisting}{Inserción de elementos}\texttt{erase}
+    \begin{codelisting}{Inserción de elementos}
 int n = 4;        
 vector<int> v(n);
 for(int i = 0; i < n; i++) {
@@ -411,16 +411,15 @@ for(int fila = 0; fila < n; fila++) {
 // si no seria vector<vector<int>> matriz(n, vector<int>(n));
 matriz = vector<vector<int>>(n, vector<int>(n)); 
 for(int fila = 0; fila < n; fila++) {
-    matriz.push_back(vector<int>());
     for(int columna = 0; columna < n; columna++) {matrix[1]=
         matriz[fila][columna] = columna + fila * n;
     }
 }
 
 // Imprimos por pantalla la matriz
-for(int fila = 0; fila < 4; fila++) {
+for(int fila = 0; fila < n; fila++) {
     matriz.push_back(vector<int>());
-    for(int columna = 0; columna < 4; columna++) {
+    for(int columna = 0; columna < n; columna++) {
         cout << matriz[fila][columna] << " ";
     }
     cout << endl;
@@ -657,13 +656,13 @@ cout << endl; // 3 4 2 -1 4 1 2 3
     de imprimir un vector para dar una solución es:
 
     \begin{codelisting}{Imprimir un vector como solución en un juez}
-// Suponemos que el vector no es vacio
 vector<int> v {3, 4, 2, -1, 4, 1, 2, 3};
-for(int i = 0; i < v.size() - 1; i++) {
-    cout << v[i] << " ";
-} 
-cout << v.back() << endl;
-            \end{codelisting}
+for(int i = 0; i < v.size(); i++) {
+    if (i > 0) cout << " ";
+    cout << v[i];
+}
+cout << endl;
+    \end{codelisting}
 \end{document}
 
 
