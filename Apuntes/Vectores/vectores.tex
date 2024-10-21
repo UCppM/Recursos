@@ -515,22 +515,22 @@ int main() {
             \def\mylist{1, 3, 5, 5, 7, 9}
             \def\size{0.8}
             \draw pic [local bounding box=A] {array={\mylist}{\size}};
-            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
             \draw node (B) [left = 0em of A]  {\texttt{lower\_bound(v.begin(), v.end(), 6)}};
 
-            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw pic [below = 1.75 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
-            \draw node (D) [left = -2.4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {6};
-            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
-            \draw node (DDD) [right = 0 of DD, minimum size = \size cm, fill=green, opacity=0.25] {6};
-            \draw node (DDDD) [right = 0 of DDD, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (D) [left = -2.4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {};
+            \draw node (DDD) [right = 0 of DD, minimum size = \size cm, fill=green, opacity=0.25] {};
+            \draw node (DDDD) [right = 0 of DDD, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw node (B) [left = 0em of C]  {\texttt{lower\_bound(v.begin(), v.end(), 5)}};
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
             \draw pic [below = 1.75 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
-            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {5};
+            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {};
             \draw node (G) [left = 0em of E]  {\texttt{lower\_bound(v.begin(), v.end(), 14)}};
             \draw[red, thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
         \end{tikzpicture}
@@ -547,20 +547,20 @@ int main() {
             \def\mylist{1, 3, 5, 5, 7, 9}
             \def\size{0.8}
             \draw pic [local bounding box=A] {array={\mylist}{\size}};
-            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (D) [right = -1.6cm of A, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
             \draw node (B) [left = 0em of A]  {\texttt{upper\_bound(v.begin(), v.end(), 6)}};
 
-            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw pic [below = 1.75 of A.west, anchor=east, local bounding box=C] {array={\mylist}{\size}};
-            \draw node (D) [left = -4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {6};
-            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {6};
+            \draw node (D) [left = -4cm of C, minimum size = \size cm, fill=green, opacity=0.25] {};
+            \draw node (DD) [right = 0 of D, minimum size = \size cm, fill=green, opacity=0.25] {};
             \draw node (B) [left = 0em of C]  {\texttt{upper\_bound(v.begin(), v.end(), 5)}};
             \draw[thick,<-,shorten <=1pt] (D) -- +(-90:1cm);
 
             \draw pic [below = 1.75 of C.west, anchor=east, local bounding box=E] {array={\mylist}{\size}};
-            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {5};
+            \draw node (F) [right = -0.4cm of E, minimum size = \size cm, opacity=0.25] {};
             \draw node (G) [left = 0em of E]  {\texttt{upper\_bound(v.begin(), v.end(), 14)}};
             \draw[red, thick,<-,shorten <=1pt] (F) -- +(-90:1cm);
         \end{tikzpicture}
@@ -663,7 +663,3 @@ for(int i = 0; i < v.size(); i++) {
 cout << endl;
     \end{codelisting}
 \end{document}
-
-
-
-    
