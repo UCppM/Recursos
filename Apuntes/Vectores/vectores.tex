@@ -15,23 +15,6 @@
 \logo{logo.png}
 \author{Jorge Hernández Palop}
 
-\tikzset{
-  pics/array/.style 2 args={
-    code = {
-        \foreach \x [count=\xi, evaluate=\x as \sep using #2*\xi] in #1 {
-            \node [draw, minimum size=#2 cm] at (\sep, 0) {\x};
-        }
-    }
-  },
-  pics/borderless array/.style 2 args={
-    code = {
-        \foreach \x [count=\xi, evaluate=\x as \sep using #2*\xi] in #1 {
-            \node [minimum size=#2 cm] at (\sep, 0) {\x};
-        }
-    }
-  }
-}
-
 \begin{document}
     \maketitle
     \section{Introducción}
@@ -160,9 +143,10 @@
     \subsection{Notas Extras}
 
     \textit{En muchos problemas nos darán el tamaño del vector antes de decirnos sus elementos, en estos casos crear un 
-    vector vacio de tamaño n es nuestra mejor opción ya aunque como veremos más adelante aumentar el tamaño del vector mientras
-    insertamos elementos en un vector es 'rápido', esto supone un coste extra y hará que nuestro programa corra más rápido. 
-    Por lo tanto el 75\% de las veces  va a ser mejor inicializar un vector con un tamaño n, antes que ir insertando elementos poco a poco. }
+    vector vacio de tamaño n es nuestra mejor opción.}
+    
+    \textit{Aunque ir insertando elementos en un vector es 'rápido', esto supone un coste extra y hará que nuestro programa corra algo más lento.
+    Por lo tanto el 75\% de las veces  va a ser mejor inicializar un vector con un tamaño n, antes que ir insertando elementos poco a poco.}
     \pagebreak
     \section{Operaciones}
 
@@ -248,12 +232,12 @@ for(int i = 0; i < numeroElementos; i++) {
     \subsection{Insertar elementos}
 
     Existen dos opciones para insertar nuevos elementos dentro del vector. La primera opción es usar \texttt{push\_back},
-    este método es muy rápido (tiene un coste amortizado de $\mathcal{O}(1)$). Se usa así \texttt{miVector.push\_back(elemento)} . Lo que hace es añadir el elemento al final 
+    este método es muy rápido (tiene un coste amortizado de $\mathcal{O}(1)$\footnote{No es necesario saber lo que es el costo de un algoritmo, solo que cuanto más rápido crezca la función de coste peor algoritmo será.}). Se usa así \texttt{miVector.push\_back(elemento)} . Lo que hace es añadir el elemento al final 
     del vector. 
     
     El segundo método, es el método \texttt{insert} que nos permite seleccionar en que posición colocar el
     nuevo elemento, antes de ser colocado todos los elementos a la derecha se ruedan a una posición para poder hacer hueco
-    al nuevo elemento. Este método es mucho más lento sobretodo cuando la posición sea cercana a 0 (tiene un coste de $\mathcal{O}(n)$). 
+    al nuevo elemento. Este método es mucho más lento sobretodo cuando la posición sea cercana a 0 (tiene un coste de $\mathcal{O}(n)\footnotemark[1]$). 
     Además hace uso de operadores, los cuales no hemos comentado. Se usa así \texttt{miVector.insert(iteradorEnLaPosicion, elemento)}. 
     Para determinar la posición del iterador vamos a usar \texttt{miVector.begin()}, que nos da un iterador al comienzo del vector, 
     y le sumamos la posición donde queremos insertar el elemento de la siguiente manera \texttt{miVector.insert(miVector.begin() + posición, elemento)}.
@@ -468,7 +452,7 @@ for(int fila = 0; fila < n; fila++) {
 
     Muchas veces nos interesa ordenar el vector de otra manera, por ejemplo de mayor a menor, para ello
     existe la función $\texttt{greater<tipoElemento>()}$ que usaremos de la siguiente manera 
-    $\texttt{sort(miVector.begin(), miVector.end(), greater<tipoElemento>())}$. También podemos pasarle A
+    $\texttt{sort(miVector.begin(), miVector.end(), greater<tipoElemento>())}$. También podemos pasarle a
     sort nuestras propias funciones para ordenar siguiendo otros criterios
     siempre que sean de la forma $\texttt{bool miFuncion(tipoElemento a, tipoElemento b)}$. Donde $\texttt{miFuncion}$
     devuelve $ \texttt{true}$ si queremos que el elemento \texttt{a} se encuentre antes que \texttt{b}. Pasar
@@ -606,7 +590,7 @@ cout << "upper: indice = " << indiceUpper << ", elem = " << elementoUpper << end
     \end{codelisting}
     \subsection{Invertir un vector}
     Este operación se encuentra dentro de la librería \texttt{algorithm} y nos permite invertir el orden de un vector
-    de la siguiente manera \texttt{reverse(miVector.begin(), miVector.end())}.
+    de la siguiente manera \texttt{reverse(miVector.begin(), miVector.end())}, de esta manera \texttt{miVector} queda invertido. 
 
     \begin{figure}[h]
         \centering

@@ -4,8 +4,10 @@
 \RequirePackage{graphicx}
 \RequirePackage{titling}
 \RequirePackage{fancyhdr}
+\RequirePackage[hyperfootnotes=false]{hyperref}
 \RequirePackage[skip=12pt plus=1pt, indent=15pt]{parskip}
 \RequirePackage{listings}
+\RequirePackage{tikz}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage[svgnames]{xcolor}
 
@@ -69,3 +71,19 @@
     listing options={basicstyle=\ttfamily\footnotesize,language=C++}, 
     title=Código \thetcbcounter: #2, #1}
 
+    \tikzset{
+        pics/array/.style 2 args={
+          code = {
+              \foreach \x [count=\xi, evaluate=\x as \sep using #2*\xi] in #1 {
+                  \node [draw, minimum size=#2 cm] at (\sep, 0) {\x};
+              }
+          }
+        },
+        pics/borderless array/.style 2 args={
+          code = {
+              \foreach \x [count=\xi, evaluate=\x as \sep using #2*\xi] in #1 {
+                  \node [minimum size=#2 cm] at (\sep, 0) {\x};
+              }
+          }
+        }
+      }
